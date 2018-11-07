@@ -7,7 +7,7 @@
 
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
-    <Version>0.0.1</Version>
+    <Version>0.0.3</Version>
 
     <Authors>Synopsys</Authors>
 
