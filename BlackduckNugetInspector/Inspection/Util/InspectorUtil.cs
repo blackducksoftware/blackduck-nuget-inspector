@@ -60,7 +60,11 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Util
 
         public static string CreatePath(List<string> pathSegments)
         {
-            return String.Join(String.Format("{0}", Path.DirectorySeparatorChar), pathSegments);
+            String rawCombined = String.Join(String.Format("{0}", Path.DirectorySeparatorChar), pathSegments);
+            Console.WriteLine("Joining path to: " + rawCombined);
+            String properCombined = Path.GetFullPath(rawCombined);
+            Console.WriteLine("Joined path as: " + properCombined);
+            return properCombined;
         }
     }
 }
