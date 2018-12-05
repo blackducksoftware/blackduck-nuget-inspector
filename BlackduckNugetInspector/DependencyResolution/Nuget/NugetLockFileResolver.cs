@@ -26,7 +26,9 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget
                 }
                 else
                 {
-                    throw new Exception($"Unable to find a version to satisfy range {range.PrettyPrint()} for the dependency " + name);
+                    Console.WriteLine($"WARNING: Unable to find a version to satisfy range {range.PrettyPrint()} for the dependency " + name);
+                    Console.WriteLine($"Instead will return the minimum range demanded: " + range.MinVersion.ToFullString());
+                    return range.MinVersion;
                 }
             }
             else

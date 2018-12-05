@@ -217,7 +217,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                     proj.SetProperty("Configuration", config);
                     proj.ReevaluateIfNecessary();
                     var path = proj.GetPropertyValue("OutputPath");
-                    var fullPath = Path.GetFullPath(Path.Combine(proj.DirectoryPath, path));
+                    var fullPath = PathUtil.Combine(proj.DirectoryPath, path);
                     outputPaths.Add(fullPath);
                     Console.WriteLine("Found path: " + fullPath);
                 }
@@ -296,33 +296,26 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                 return false;//did not match exclusion, include it.
             }
         }
-
-        private string CreateRelativePathToFile(string projectDirectory, string filename)
-        {
-            List<string> pathSegments = new List<string>();
-            pathSegments.Add(projectDirectory);
-            pathSegments.Add(filename);
-            return InspectorUtil.CreatePath(pathSegments);
-        }
+        
 
         private string CreateProjectPackageConfigPath(string projectDirectory)
         {
-            return CreateRelativePathToFile(projectDirectory, "packages.config");
+            return PathUtil.Combine(projectDirectory, "packages.config");
         }
 
         private string CreateProjectJsonPath(string projectDirectory)
         {
-            return CreateRelativePathToFile(projectDirectory, "project.json");
+            return PathUtil.Combine(projectDirectory, "project.json");
         }
 
         private string CreateProjectJsonLockPath(string projectDirectory)
         {
-            return CreateRelativePathToFile(projectDirectory, "project.lock.json");
+            return PathUtil.Combine(projectDirectory, "project.lock.json");
         }
 
         private string CreateProjectAssetsJsonPath(string projectDirectory)
         {
-            return CreateRelativePathToFile(projectDirectory, $"obj{Path.DirectorySeparatorChar}project.assets.json");
+            return PathUtil.Combine(projectDirectory, "obj", "project.assets.json");
         }
 
     }

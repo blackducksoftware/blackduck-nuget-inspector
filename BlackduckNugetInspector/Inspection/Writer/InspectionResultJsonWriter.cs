@@ -1,4 +1,5 @@
 ﻿using Com.Synopsys.Integration.Nuget.Inspection.Model;
+using Com.Synopsys.Integration.Nuget.Inspection.Util;
 using Com.Synopsys.Integration.Nuget.Model;
 using Newtonsoft.Json;
 using System;
@@ -22,8 +23,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Writer
 
         public string FilePath()
         {
-            // TODO: fix file name
-            return $"{Result.OutputDirectory}{Path.DirectorySeparatorChar}{Result.ResultName}_inspection.json";
+            return PathUtil.Combine(Result.OutputDirectory, Result.ResultName + "_inspection.json");
         }
 
         public void Write()

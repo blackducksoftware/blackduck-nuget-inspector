@@ -34,7 +34,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
             if (String.IsNullOrWhiteSpace(Options.OutputDirectory))
             {
                 string currentDirectory = Directory.GetCurrentDirectory();
-                Options.OutputDirectory = $"{currentDirectory}{Path.DirectorySeparatorChar}{InspectorUtil.DEFAULT_OUTPUT_DIRECTORY}";
+                Options.OutputDirectory = PathUtil.Combine(currentDirectory, InspectorUtil.DEFAULT_OUTPUT_DIRECTORY);
             }
             if (String.IsNullOrWhiteSpace(Options.SolutionName))
             {
