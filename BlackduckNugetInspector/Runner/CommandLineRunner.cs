@@ -55,43 +55,6 @@ namespace Com.Synopsys.Integration.Nuget.Runner
             var searchService = new NugetSearchService(options.PackagesRepoUrl, options.NugetConfigPath);
             var inspectionResults = Dispatch.Inspect(opts, searchService);
 
-            if (inspectionResults != null)
-            {
-                foreach (var result in inspectionResults)
-                {
-                    try
-                    {
-                        if (result.ResultName != null)
-                        {
-                            Console.WriteLine("Inspection: " + result.ResultName);
-                        }
-                        if (result.Status == InspectionResult.ResultStatus.Success)
-                        {
-                            Console.WriteLine("Inspection Result: Success");
-                            var writer = new InspectionResultJsonWriter(result);
-                            writer.Write();
-                            Console.WriteLine("Info file created at {0}", writer.FilePath());
-                        }
-                        else
-                        {
-                            Console.WriteLine("Inspection Result: Error");
-                            if (result.Exception != null)
-                            {
-                                Console.WriteLine("Exception:");
-                                Console.WriteLine(result.Exception);
-                            }
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Error processing inspection result.");
-                        Console.WriteLine(e.Message);
-                        Console.WriteLine(e.StackTrace);
-                    }
-
-                }
-            }
-
             return inspectionResults;
         }
     }
