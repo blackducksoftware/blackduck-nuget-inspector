@@ -14,8 +14,6 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Util
             string version = null;
             try
             {
-                List<string> pathSegments = new List<string>();
-                pathSegments.Add(projectDirectory);
                 string[] assemblyInfoPaths = Directory.GetFiles(projectDirectory, "*AssemblyInfo.*", SearchOption.AllDirectories);
                 foreach (string path in assemblyInfoPaths)
                 {

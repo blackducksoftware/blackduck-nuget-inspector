@@ -99,11 +99,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
                         try
                         {
                             string projectRelativePath = project.Path;
-                            List<string> projectPathSegments = new List<string>();
-                            projectPathSegments.Add(solutionDirectory);
-                            projectPathSegments.Add(projectRelativePath);
-
-                            string projectPath = InspectorUtil.CreatePath(projectPathSegments);
+                            string projectPath = PathUtil.Combine(solutionDirectory, projectRelativePath);
                             string projectName = project.Name;
                             if (duplicateNames.Contains(projectName))
                             {
