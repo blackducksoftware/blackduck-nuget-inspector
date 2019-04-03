@@ -27,6 +27,7 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 
             // .NET core default version
             result.ProjectVersion = "1.0.0";
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             XmlDocument doc = new XmlDocument();
             doc.Load(ProjectPath);
