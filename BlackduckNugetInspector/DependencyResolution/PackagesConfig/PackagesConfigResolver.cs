@@ -50,7 +50,7 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.PackagesConfig
             foreach (var packageRef in packages)
             {
                 string componentName = packageRef.PackageIdentity.Id;
-                var version = new NuGet.Versioning.NuGetVersion(packageRef.PackageIdentity.Version.Version);
+                var version = packageRef.PackageIdentity.Version;
                 var versionRange = new NuGet.Versioning.VersionRange(version, true, version, true);
                 var framework = NuGet.Frameworks.NuGetFramework.Parse(packageRef.TargetFramework.Framework);
 
