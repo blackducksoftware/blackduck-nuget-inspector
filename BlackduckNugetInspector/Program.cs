@@ -2,6 +2,7 @@
 using Com.Synopsys.Integration.Nuget.Inspection.Model;
 using Com.Synopsys.Integration.Nuget.Inspection.Writer;
 using Com.Synopsys.Integration.Nuget.Runner;
+using Microsoft.Build.Locator;
 using System;
 
 namespace IntegrationNugetInspectorPortable
@@ -10,6 +11,16 @@ namespace IntegrationNugetInspectorPortable
     {
         static void Main(string[] args)
         {
+            try
+            {
+                Console.WriteLine("Registering MSBuild defaults.");
+                MSBuildLocator.RegisterDefaults();
+            } catch (Exception e)
+            {
+                Console.WriteLine("Failed to register defaults.");
+                Console.Write(e);
+            }
+
             try
             {
                 var dispatch = new InspectorDispatch();
