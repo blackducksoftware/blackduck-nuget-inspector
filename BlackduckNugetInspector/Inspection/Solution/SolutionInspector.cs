@@ -106,6 +106,22 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
                                 Console.WriteLine($"Duplicate project name '{projectName}' found. Using GUID instead.");
                                 projectName = project.GUID;
                             }
+                            Boolean projectFileExists = false;
+                            try
+                            {
+                                projectFileExists = File.Exists(projectPath);
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("Skipping unknown project path: " + projectPath);
+                                continue;
+                            }
+
+                            if (!projectFileExists)
+                            {
+                                Console.WriteLine("Skipping non-existent project path: " + projectPath);
+                                continue;
+                            }
 
                             ProjectInspector projectInspector = new ProjectInspector(new ProjectInspectionOptions(Options)
                             {
