@@ -204,9 +204,10 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
         public List<String> FindOutputPaths()
         {
             //TODO: Move to a new class (OutputPathResolver?)
+            Console.WriteLine("Attempting to parse configuration output paths.");
+            Console.WriteLine("Project File: " + Options.TargetPath);
             try
             {
-                Console.WriteLine("Attempting to parse configuration output paths.");
                 Microsoft.Build.Evaluation.Project proj = new Microsoft.Build.Evaluation.Project(Options.TargetPath);
                 List<string> outputPaths = new List<string>();
                 List<string> configurations;
@@ -227,8 +228,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to load configuration output paths for project {0}, using project directory instead '{1}'", Options.ProjectName, Options.ProjectDirectory);
-                Console.WriteLine("Nuget configuration message: '{0}'", e.Message);
+                Console.WriteLine("Skipping configuration output paths.");
                 return new List<string>() { };
             }
         }
