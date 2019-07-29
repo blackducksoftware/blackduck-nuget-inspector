@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Com.Synopsys.Integration.Nuget</RootNamespace>
 
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
-    <Version>0.0.10</Version>
+    <Version>0.0.11</Version>
 
     <Authors>Synopsys</Authors>
 
@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="16.0.461">
+    <PackageReference Include="Microsoft.Build" Version="15.9.20">
       <ExcludeAssets>runtime</ExcludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Build.Locator" Version="1.2.2" />
