@@ -129,7 +129,14 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                 projectNode.SourcePath = Options.TargetPath;
                 projectNode.Type = "Project";
 
-                projectNode.OutputPaths = FindOutputPaths();
+                try
+                {
+                    projectNode.OutputPaths = FindOutputPaths();
+                } catch (Exception e)
+                {
+                    Console.WriteLine("Unable to determine output paths for this project.");
+                }
+                
 
                 bool packagesConfigExists = !String.IsNullOrWhiteSpace(Options.PackagesConfigPath) && File.Exists(Options.PackagesConfigPath);
                 bool projectJsonExists = !String.IsNullOrWhiteSpace(Options.ProjectJsonPath) && File.Exists(Options.ProjectJsonPath);
