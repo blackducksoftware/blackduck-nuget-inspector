@@ -29,6 +29,20 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
                 Microsoft.Build.Evaluation.Project proj = new Microsoft.Build.Evaluation.Project(ProjectPath);
 
                 List<NugetDependency> deps = new List<NugetDependency>();
+                foreach (ProjectItem reference in proj.GetItemsIgnoringCondition("PackageReference"))
+                {
+                    var versionMetaData = reference.Metadata.Where(meta => meta.Name == "Version").FirstOrDefault().EvaluatedValue;
+                    NuGet.Versioning.VersionRange version;
+                    if (NuGet.Versioning.VersionRange.TryParse(versionMetaData, out version))
+                    {
+                        var dep = new NugetDependency(reference.EvaluatedInclude, version);
+                        deps.Add(dep);
+                    } else
+                    {
+                        Console.WriteLine("Framework dependency had no version, will not be included: " + reference.EvaluatedInclude);
+                    }
+                }
+
                 foreach (ProjectItem reference in proj.GetItemsIgnoringCondition("Reference"))
                 {
                     if (reference.Xml != null && !String.IsNullOrWhiteSpace(reference.Xml.Include) && reference.Xml.Include.Contains("Version="))
