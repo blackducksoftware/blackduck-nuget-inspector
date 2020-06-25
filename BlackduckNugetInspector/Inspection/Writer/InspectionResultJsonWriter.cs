@@ -3,9 +3,7 @@ using Com.Synopsys.Integration.Nuget.Inspection.Util;
 using Com.Synopsys.Integration.Nuget.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.Inspection.Writer
 {
@@ -17,8 +15,10 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Writer
         public InspectionResultJsonWriter(InspectionResult result)
         {
             Result = result;
-            InspectionOutput = new InspectionOutput();
-            InspectionOutput.Containers = result.Containers;
+            InspectionOutput = new InspectionOutput
+            {
+                Containers = result.Containers
+            };
         }
 
         public string FilePath()
@@ -54,8 +54,10 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Writer
             {
                 using (var sw = new StreamWriter(fs))
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.NullValueHandling = NullValueHandling.Ignore;
+                    JsonSerializer serializer = new JsonSerializer
+                    {
+                        NullValueHandling = NullValueHandling.Ignore
+                    };
                     JsonTextWriter writer = new JsonTextWriter(sw);
                     serializer.Formatting = Formatting.Indented;
                     serializer.Serialize(writer, InspectionOutput);

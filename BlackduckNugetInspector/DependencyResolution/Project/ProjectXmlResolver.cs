@@ -8,11 +8,11 @@ using System.Xml;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 {
-    class ProjectXmlResolver : DependencyResolver
+    class ProjectXmlResolver : IDependencyResolver
     {
 
-        private string ProjectPath;
-        private NugetSearchService NugetSearchService;
+        private readonly string ProjectPath;
+        private readonly NugetSearchService NugetSearchService;
 
         public ProjectXmlResolver(string projectPath, NugetSearchService nugetSearchService)
         {

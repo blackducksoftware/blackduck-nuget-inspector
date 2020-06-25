@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Com.Synopsys.Integration.Nuget.Model
+﻿namespace Com.Synopsys.Integration.Nuget.Model
 {
     public class PackageId
     {

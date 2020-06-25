@@ -5,15 +5,14 @@ using Microsoft.Build.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 {
-    class ProjectReferenceResolver : DependencyResolver
+    class ProjectReferenceResolver : IDependencyResolver
     {
 
-        private string ProjectPath;
-        private NugetSearchService NugetSearchService;
+        private readonly string ProjectPath;
+        private readonly NugetSearchService NugetSearchService;
         public ProjectReferenceResolver(string projectPath, NugetSearchService nugetSearchService)
         {
             ProjectPath = projectPath;
@@ -32,12 +31,12 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
                 foreach (ProjectItem reference in proj.GetItemsIgnoringCondition("PackageReference"))
                 {
                     var versionMetaData = reference.Metadata.Where(meta => meta.Name == "Version").FirstOrDefault().EvaluatedValue;
-                    NuGet.Versioning.VersionRange version;
-                    if (NuGet.Versioning.VersionRange.TryParse(versionMetaData, out version))
+                    if (NuGet.Versioning.VersionRange.TryParse(versionMetaData, out NuGet.Versioning.VersionRange version))
                     {
                         var dep = new NugetDependency(reference.EvaluatedInclude, version);
                         deps.Add(dep);
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("Framework dependency had no version, will not be included: " + reference.EvaluatedInclude);
                     }

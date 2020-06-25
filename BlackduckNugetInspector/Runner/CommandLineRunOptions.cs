@@ -1,7 +1,5 @@
 ﻿using Com.Synopsys.Integration.Nuget.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.Runner
 {

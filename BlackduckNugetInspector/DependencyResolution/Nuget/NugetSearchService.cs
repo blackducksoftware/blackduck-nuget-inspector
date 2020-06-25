@@ -8,7 +8,6 @@ using NuGet.Packaging.Core;
 using NuGet.Protocol;
 using NuGet.Protocol.Core.Types;
 using NuGet.Versioning;
-using NuGet.Frameworks;
 using System.IO;
 using System.Diagnostics;
 
@@ -16,10 +15,9 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget
 {
     public class NugetSearchService
     {
-        List<PackageMetadataResource> MetadataResourceList = new List<PackageMetadataResource>();
-        List<DependencyInfoResource> DependencyInfoResourceList = new List<DependencyInfoResource>();
-        private CompatibilityProvider frameworkCompatibilityProvider = new CompatibilityProvider(DefaultFrameworkNameProvider.Instance);
-        private Dictionary<String, List<IPackageSearchMetadata>> lookupCache = new Dictionary<string, List<IPackageSearchMetadata>>();
+        readonly List<PackageMetadataResource> MetadataResourceList = new List<PackageMetadataResource>();
+        readonly List<DependencyInfoResource> DependencyInfoResourceList = new List<DependencyInfoResource>();
+        private readonly Dictionary<String, List<IPackageSearchMetadata>> lookupCache = new Dictionary<string, List<IPackageSearchMetadata>>();
 
         public NugetSearchService(string packagesRepoUrl, string nugetConfig)
         {

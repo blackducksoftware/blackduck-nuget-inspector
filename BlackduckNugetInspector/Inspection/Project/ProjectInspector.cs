@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Com.Synopsys.Integration.Nuget.Inspection.Model;
 using Com.Synopsys.Integration.Nuget.Inspection.Util;
 using Com.Synopsys.Integration.Nuget.Model;

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Com.Synopsys.Integration.Nuget.Inspection.Model
+﻿namespace Com.Synopsys.Integration.Nuget.Inspection.Model
 {
     class InspectionOptions
     {

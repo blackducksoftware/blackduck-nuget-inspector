@@ -1,10 +1,8 @@
 ﻿using Com.Synopsys.Integration.Nuget.Configuration;
 using Mono.Options;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Reflection;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.Runner
 {

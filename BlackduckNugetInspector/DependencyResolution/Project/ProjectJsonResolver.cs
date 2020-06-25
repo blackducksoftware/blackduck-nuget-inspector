@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 {
-    class ProjectJsonResolver : DependencyResolver
+    class ProjectJsonResolver : IDependencyResolver
     {
-        private string ProjectName;
-        private string ProjectJsonPath;
+        private readonly string ProjectName;
+        private readonly string ProjectJsonPath;
 
         public ProjectJsonResolver(string projectName, string projectJsonPath)
         {
@@ -24,8 +22,10 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 
             foreach (NuGet.LibraryModel.LibraryDependency package in packages)
             {
-                var set = new Model.PackageSet();
-                set.PackageId = new Model.PackageId(package.Name, package.LibraryRange.VersionRange.OriginalString);
+                var set = new Model.PackageSet
+                {
+                    PackageId = new Model.PackageId(package.Name, package.LibraryRange.VersionRange.OriginalString)
+                };
                 result.Packages.Add(set);
                 result.Dependencies.Add(set.PackageId);
             }

@@ -1,7 +1,6 @@
 ﻿using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Com.Synopsys.Integration.Nuget.Inspection.Model;
 using System.IO;
 using Com.Synopsys.Integration.Nuget.Inspection.Util;
@@ -70,10 +69,12 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
         {
             Console.WriteLine("Processing Solution: " + Options.TargetPath);
             var stopwatch = Stopwatch.StartNew();
-            Container solution = new Container();
-            solution.Name = Options.SolutionName;
-            solution.SourcePath = Options.TargetPath;
-            solution.Type = "Solution";
+            Container solution = new Container
+            {
+                Name = Options.SolutionName,
+                SourcePath = Options.TargetPath,
+                Type = "Solution"
+            };
             try
             {
 

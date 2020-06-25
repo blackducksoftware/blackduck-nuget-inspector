@@ -1,13 +1,10 @@
 ﻿using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 {
-    class ProjectAssetsJsonResolver : DependencyResolver
+    class ProjectAssetsJsonResolver : IDependencyResolver
     {
-        private string ProjectAssetsJsonPath;
+        private readonly string ProjectAssetsJsonPath;
 
         public ProjectAssetsJsonResolver(string projectAssetsJsonPath)
         {

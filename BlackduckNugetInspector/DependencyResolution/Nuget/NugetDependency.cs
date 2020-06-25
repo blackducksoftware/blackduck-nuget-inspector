@@ -1,9 +1,6 @@
 ﻿using NuGet.Frameworks;
 using NuGet.Packaging.Core;
 using NuGet.Versioning;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget
 {
@@ -28,8 +25,10 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget
 
         public Model.PackageSet ToEmptyPackageSet()
         {
-            var packageSet = new Model.PackageSet();
-            packageSet.PackageId = new Model.PackageId(Name, VersionRange.MinVersion.ToNormalizedString());
+            var packageSet = new Model.PackageSet
+            {
+                PackageId = new Model.PackageId(Name, VersionRange.MinVersion.ToNormalizedString())
+            };
             return packageSet;
         }
     }

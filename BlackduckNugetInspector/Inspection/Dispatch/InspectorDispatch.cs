@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.Inspection.Dispatch
 {
@@ -37,8 +36,10 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Dispatch
                     foreach (var solution in solutionPaths)
                     {
                         Console.WriteLine("Found Solution {0}", solution);
-                        var solutionOp = new SolutionInspectionOptions(options);
-                        solutionOp.TargetPath = solution;
+                        var solutionOp = new SolutionInspectionOptions(options)
+                        {
+                            TargetPath = solution
+                        };
                         inspectors.Add(new SolutionInspector(solutionOp, nugetService));
                     }
 
@@ -52,8 +53,10 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Dispatch
                         foreach (var projectPath in projectPaths)
                         {
                             Console.WriteLine("Found project {0}", projectPath);
-                            var projectOp = new ProjectInspectionOptions(options);
-                            projectOp.TargetPath = projectPath;
+                            var projectOp = new ProjectInspectionOptions(options)
+                            {
+                                TargetPath = projectPath
+                            };
                             inspectors.Add(new ProjectInspector(projectOp, nugetService));
                         }
                     }
@@ -67,14 +70,18 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Dispatch
             {
                 if (options.TargetPath.Contains(".sln"))
                 {
-                    var solutionOp = new SolutionInspectionOptions(options);
-                    solutionOp.TargetPath = options.TargetPath;
+                    var solutionOp = new SolutionInspectionOptions(options)
+                    {
+                        TargetPath = options.TargetPath
+                    };
                     inspectors.Add(new SolutionInspector(solutionOp, nugetService));
                 }
                 else
                 {
-                    var projectOp = new ProjectInspectionOptions(options);
-                    projectOp.TargetPath = options.TargetPath;
+                    var projectOp = new ProjectInspectionOptions(options)
+                    {
+                        TargetPath = options.TargetPath
+                    };
                     inspectors.Add(new ProjectInspector(projectOp, nugetService));
                 }
             }

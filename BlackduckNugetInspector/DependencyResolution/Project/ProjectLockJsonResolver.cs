@@ -1,11 +1,8 @@
 ﻿using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Project
 {
-    class ProjectLockJsonResolver : DependencyResolver
+    class ProjectLockJsonResolver : IDependencyResolver
     {
         private string ProjectLockJsonPath;
 

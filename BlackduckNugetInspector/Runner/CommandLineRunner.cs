@@ -1,15 +1,8 @@
-﻿using Com.Synopsys.Integration.Nuget.Configuration;
-using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
+﻿using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
 using Com.Synopsys.Integration.Nuget.Inspection.Dispatch;
 using Com.Synopsys.Integration.Nuget.Inspection.Model;
-using Com.Synopsys.Integration.Nuget.Inspection.Writer;
-using Mono.Options;
-using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.IO;
-using System.Reflection;
 
 namespace Com.Synopsys.Integration.Nuget.Runner
 {

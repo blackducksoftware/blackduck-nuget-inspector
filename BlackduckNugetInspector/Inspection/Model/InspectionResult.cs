@@ -1,7 +1,6 @@
 ﻿using Com.Synopsys.Integration.Nuget.Model;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Com.Synopsys.Integration.Nuget.Inspection.Model
 {

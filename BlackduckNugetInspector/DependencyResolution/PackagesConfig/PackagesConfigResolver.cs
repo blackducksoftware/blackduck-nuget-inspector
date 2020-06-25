@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget;
 using NuGet.Packaging;
 
 namespace Com.Synopsys.Integration.Nuget.DependencyResolution.PackagesConfig
 {
-    class PackagesConfigResolver : DependencyResolver
+    class PackagesConfigResolver : IDependencyResolver
     {
-        private string PackagesConfigPath;
-        private NugetSearchService NugetSearchService;
+        private readonly string PackagesConfigPath;
+        private readonly NugetSearchService NugetSearchService;
 
         public PackagesConfigResolver(string packagesConfigPath, NugetSearchService nugetSearchService)
         {
