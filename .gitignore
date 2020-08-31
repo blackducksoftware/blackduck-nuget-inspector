@@ -5,3 +5,9 @@ packages/
 .vs
 blackduck/
 BlackduckNugetInspector/nupkg/
+BlackduckNugetInspector/artifactory/
+BlackduckNugetInspector/inspecot/
+BlackduckNugetInspector/tools/
+BlackduckNugetInspector/publish-output/
+.swip/
+BlackduckNugetInspector/output/
