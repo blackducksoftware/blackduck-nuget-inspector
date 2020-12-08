@@ -1,63 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using static Com.Synopsys.Integration.Nuget.Inspection.Util.AssemblyInfoVersionParser;
 
 namespace Com.Synopsys.Integration.Nuget.Inspection.Util
 {
     class InspectorUtil
     {
         public const string DEFAULT_OUTPUT_DIRECTORY = "blackduck";
-
+        //"oreAssemblyInfo).Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>"
+        //var attribute = typeof(CoreAssemblyInfo).Assembly.GetCustomAttribute<AssemblyFileVersionAttribute>();
+        //[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
         public static string GetProjectAssemblyVersion(string projectDirectory)
         {
-            string version = null;
             try
             {
-                string[] assemblyInfoPaths = Directory.GetFiles(projectDirectory, "*AssemblyInfo.*", SearchOption.AllDirectories);
-                foreach (string path in assemblyInfoPaths)
-                {
-                    if (path.EndsWith(".obj"))
-                    {
-                        Console.WriteLine("Will not use obj assembly path: {0}", path);
-                        continue;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Looking for version in assembly path {0}", path);
-                    }
-                    if (File.Exists(path))
-                    {
-
-                        List<string> contents = new List<string>(File.ReadAllLines(path));
-                        List<string> versionText = contents.FindAll(text => text.Contains("AssemblyFileVersion"));
-                        if (versionText == null || versionText.Count == 0)
+                List<AssemblyVersionResult> results = Directory.GetFiles(projectDirectory, "*AssemblyInfo.*", SearchOption.AllDirectories).ToList()
+                    .Select(path => {
+                        if (!path.EndsWith(".obj"))
                         {
-                            versionText = contents.FindAll(text => text.Contains("AssemblyVersion"));
-                        }
-                        if (versionText != null)
-                        {
-                            foreach (string text in versionText)
+                            if (File.Exists(path))
                             {
-                                String versionLine = text.Trim();
-                                if (!versionLine.StartsWith("//"))
-                                {
-                                    int firstParen = versionLine.IndexOf("(");
-                                    int lastParen = versionLine.LastIndexOf(")");
-                                    // exclude the '(' and the " characters
-                                    int start = firstParen + 2;
-                                    // exclude the ')' and the " characters
-                                    int end = lastParen - 1;
-                                    version = versionLine.Substring(start, (end - start));
-                                    break;
-                                }
+                                return AssemblyInfoVersionParser.ParseVersion(path);
                             }
                         }
-                    }
-                    if (version != null)
-                    {
-                        break;
-                    }
+                        return null;
+                    })
+                    .Where(it => it != null)
+                    .ToList();
+
+                AssemblyVersionResult selected = null;
+                if (results.Any(it => it.confidence == ConfidenceLevel.HIGH))
+                {
+                    selected = results.First(it => it.confidence == ConfidenceLevel.HIGH);
+                } 
+                else if (results.Any(it => it.confidence == ConfidenceLevel.MEDIUM))
+                {
+                    selected = results.First(it => it.confidence == ConfidenceLevel.MEDIUM);
+                } 
+                else if (results.Count > 0)
+                {
+                    selected = results.First();
+                }
+
+                if (selected != null)
+                {
+                    Console.WriteLine($"Selected version '{selected.version}' from '{selected.path}'.");
+                    return selected.version;
+                } else
+                {
+                    return null;
                 }
             }
             catch (Exception e)
@@ -66,7 +60,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Util
                 Console.WriteLine("The issue was: " + e.Message);
             }
 
-            return version;
+            return null;
         }
     }
 }
