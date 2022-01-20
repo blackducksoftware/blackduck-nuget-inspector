@@ -57,6 +57,11 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                 Options.ProjectName = Path.GetFileNameWithoutExtension(Options.TargetPath);
             }
 
+            if (String.IsNullOrWhiteSpace(Options.ProjectUniqueId))
+            {
+                Options.ProjectUniqueId = Path.GetFileNameWithoutExtension(Options.TargetPath);
+            }
+
             if (String.IsNullOrWhiteSpace(Options.VersionName))
             {
                 Options.VersionName = InspectorUtil.GetProjectAssemblyVersion(Options.ProjectDirectory);
@@ -77,7 +82,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                 return new InspectionResult()
                 {
                     Status = InspectionResult.ResultStatus.Success,
-                    ResultName = Options.ProjectName,
+                    ResultName = Options.ProjectUniqueId,
                     OutputDirectory = Options.OutputDirectory,
                     Containers = containers
                 };
@@ -91,7 +96,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                     return new InspectionResult()
                     {
                         Status = InspectionResult.ResultStatus.Success,
-                        ResultName = Options.ProjectName,
+                        ResultName = Options.ProjectUniqueId,
                         OutputDirectory = Options.OutputDirectory
                     };
                 }
@@ -124,7 +129,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
                     Console.WriteLine("Using Project Directory: {0}", Options.ProjectDirectory);
                 }
                 Container projectNode = new Container();
-                projectNode.Name = Options.ProjectName;
+                projectNode.Name = Options.ProjectUniqueId;
                 projectNode.Version = Options.VersionName;
                 projectNode.SourcePath = Options.TargetPath;
                 projectNode.Type = "Project";

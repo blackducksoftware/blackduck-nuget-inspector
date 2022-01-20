@@ -21,6 +21,8 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Project
         }
 
         public string ProjectName { get; set; }
+        public string ProjectUniqueId { get; set; }
+
         public string ProjectDirectory { get; set; }
         public string VersionName { get; set; }
         public string PackagesConfigPath { get; set; }

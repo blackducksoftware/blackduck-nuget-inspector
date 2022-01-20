@@ -101,10 +101,11 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
                             string projectRelativePath = project.Path;
                             string projectPath = PathUtil.Combine(solutionDirectory, projectRelativePath);
                             string projectName = project.Name;
-                            if (duplicateNames.Contains(projectName))
+                            string projectId = projectName;
+                            if (duplicateNames.Contains(projectId))
                             {
                                 Console.WriteLine($"Duplicate project name '{projectName}' found. Using GUID instead.");
-                                projectName = project.GUID;
+                                projectId = project.GUID;
                             }
                             Boolean projectFileExists = false;
                             try
@@ -126,6 +127,7 @@ namespace Com.Synopsys.Integration.Nuget.Inspection.Solution
                             ProjectInspector projectInspector = new ProjectInspector(new ProjectInspectionOptions(Options)
                             {
                                 ProjectName = projectName,
+                                ProjectUniqueId = projectId,
                                 TargetPath = projectPath
                             }, NugetService);
 
