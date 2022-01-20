@@ -161,39 +161,41 @@ namespace Com.Synopsys.Integration.Nuget.DependencyResolution.Nuget
         {
             //Reverse engineered from: https://github.com/NuGet/NuGet.Client/blob/538727480d93b7d8474329f90ccb9ff3b3543714/src/NuGet.Core/NuGet.LibraryModel/LibraryRange.cs#L68
             //With some hints from https://github.com/dotnet/NuGet.BuildTasks/pull/23/files
-            int firstSpace = projectFileDependency.IndexOf(' ');
-            if (firstSpace <= -1)
+            if (ParseProjectFileDependencyGroupTokens(projectFileDependency, " >= ", out String projectName, out String versionRaw))
             {
-                return new ProjectFileDependency(projectFileDependency, NuGet.Versioning.VersionRange.All);
+                return new ProjectFileDependency(projectName, MinVersionOrFloat(versionRaw, true /* Include min version. */));
+            }
+            else if (ParseProjectFileDependencyGroupTokens(projectFileDependency, " > ", out String projectName2, out String versionRaw2))
+            {
+                return new ProjectFileDependency(projectName2, MinVersionOrFloat(versionRaw2, false /* Do not include min version. */));
+            }
+            else if (ParseProjectFileDependencyGroupTokens(projectFileDependency, " <= ", out String projectName3, out String versionRaw3))
+            {
+                var maxVersion = NuGet.Versioning.NuGetVersion.Parse(versionRaw3);
+                return new ProjectFileDependency(projectName3, new NuGet.Versioning.VersionRange(null, false, maxVersion, true /* Include Max */));
+            }
+            else if (ParseProjectFileDependencyGroupTokens(projectFileDependency, " < ", out String projectName4, out String versionRaw4))
+            {
+                var maxVersion = NuGet.Versioning.NuGetVersion.Parse(versionRaw4);
+                return new ProjectFileDependency(projectName4, new NuGet.Versioning.VersionRange(null, false, maxVersion, false /* Do NOT Include Max */));
+            }
+            throw new Exception("Unable to parse project file dependency group, please contact support: " + projectFileDependency);
+        }
+
+        private bool ParseProjectFileDependencyGroupTokens(string input, string tokens, out String projectName, out String projectVersion)
+        {
+            if (input.Contains(tokens))
+            {
+                String[] pieces = input.Split(tokens);
+                projectName = pieces[0].Trim();
+                projectVersion = pieces[1].Trim();
+                return true;
             }
             else
             {
-                var name = projectFileDependency.Substring(0, firstSpace);
-                var versionRaw = projectFileDependency.Substring(firstSpace).Trim();
-                NuGet.Versioning.VersionRange nugetVersion;
-                if (versionRaw.StartsWith(">= "))
-                {
-                    nugetVersion = MinVersionOrFloat(versionRaw.Substring(3).Trim(), true /* Include min version. */);
-                }
-                else if (versionRaw.StartsWith("> "))
-                {
-                    nugetVersion = MinVersionOrFloat(versionRaw.Substring(2).Trim(), false /* Do not include min version. */);
-                }
-                else if (versionRaw.StartsWith("<= "))
-                {
-                    var maxVersion = NuGet.Versioning.NuGetVersion.Parse(versionRaw.Substring(3).Trim());
-                    nugetVersion = new NuGet.Versioning.VersionRange(null, false, maxVersion, true /* Include Max */);
-                }
-                else if (versionRaw.StartsWith("< "))
-                {
-                    var maxVersion = NuGet.Versioning.NuGetVersion.Parse(versionRaw.Substring(2).Trim());
-                    nugetVersion = new NuGet.Versioning.VersionRange(null, false, maxVersion, false /* Do NOT Include Max */);
-                }
-                else
-                {
-                    nugetVersion = NuGet.Versioning.VersionRange.All;
-                }
-                return new ProjectFileDependency(name, nugetVersion);
+                projectName = null;
+                projectVersion = null;
+                return false;
             }
         }
 
